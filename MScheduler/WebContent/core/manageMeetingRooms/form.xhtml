@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:jsf="http://xmlns.jcp.org/jsf"
+                template="/resources/#{coreInfo.decorator}/decorator.xhtml">
+
+	<ui:define name="title">
+		<h:outputText value="#{msgsCore['manageMeetingRooms.title.create']}" rendered="#{(! manageMeetingRoomsController.readOnly) and (manageMeetingRoomsController.selectedEntity.id == null)}" />
+		<h:outputText value="#{msgsCore['manageMeetingRooms.title.update']}" rendered="#{(! manageMeetingRoomsController.readOnly) and (manageMeetingRoomsController.selectedEntity.id != null)}" />
+		<h:outputText value="#{msgsCore['manageMeetingRooms.title.retrieve']}" rendered="#{manageMeetingRoomsController.readOnly}" />
+	</ui:define>
+    
+    <ui:define name="description">
+		<h:outputText value="#{msgsCore['manageMeetingRooms.title.create.description']}" rendered="#{(! manageMeetingRoomsController.readOnly) and (manageMeetingRoomsController.selectedEntity.id == null)}" />
+		<h:outputText value="#{msgsCore['manageMeetingRooms.title.update.description']}" rendered="#{(! manageMeetingRoomsController.readOnly) and (manageMeetingRoomsController.selectedEntity.id != null)}" />
+		<h:outputText value="#{msgsCore['manageMeetingRooms.title.retrieve.description']}" rendered="#{manageMeetingRoomsController.readOnly}" />
+    </ui:define>
+
+	<ui:define name="body">
+		<ui:decorate template="/resources/#{coreInfo.decorator}/form.xhtml">
+			<ui:param name="formName" value="form" />
+			<ui:param name="formLabel" value="#{msgsCore['manageMeetingRooms.form.title']}" />
+			<p:hotkey bind="#{msgs['jbutler.crud.hotkey.focusFirstField']}" handler="findObjectById('form:name').focus();" />
+
+			<ui:decorate template="/resources/#{coreInfo.decorator}/formfield.xhtml">
+				<ui:param name="fieldName" value="name" />
+				<ui:param name="label" value="#{msgsCore['manageMeetingRooms.form.name']}" />
+				<p:inputText id="name" value="#{manageMeetingRoomsController.selectedEntity.name}" required="true" pt:placeholder="#{msgsCore['manageMeetingRooms.form.name.placeholder']}" disabled="#{manageMeetingRoomsController.readOnly}">
+					<p:ajax event="blur" update="nameField" />
+				</p:inputText>
+			</ui:decorate>
+			<ui:decorate template="/resources/#{coreInfo.decorator}/formfield.xhtml">
+				<ui:param name="fieldName" value="capacity" />
+				<ui:param name="label" value="#{msgsCore['manageMeetingRooms.form.capacity']}" />
+				<p:inputText id="capacity" value="#{manageMeetingRoomsController.selectedEntity.capacity}" required="true" pt:placeholder="#{msgsCore['manageMeetingRooms.form.capacity.placeholder']}" disabled="#{manageMeetingRoomsController.readOnly}">
+					<p:ajax event="blur" update="capacityField" />
+				</p:inputText>
+			</ui:decorate>
+			
+			<ui:decorate template="/resources/#{coreInfo.decorator}/formfield.xhtml">
+				<ui:param name="fieldName" value="localization" />
+				<ui:param name="label" value="#{msgsCore['manageMeetingRooms.form.localization']}" />
+				<p:selectOneMenu id="localization" value="#{manageMeetingRoomsController.selectedEntity.localization}" converter="localizationConverter" disabled="#{manageMeetingRoomsController.readOnly}">
+					<f:selectItems value="#{manageLocalizationsController.localizations}" var="local" itemLabel="#{local.description}" itemValue="#{local}"/>
+				</p:selectOneMenu>
+			</ui:decorate>
+			
+			<ui:decorate template="/resources/#{coreInfo.decorator}/formfield.xhtml">
+
+				<p:dataTable value="#{manageMeetingRoomsController.selectedEntity.resource}" var="res" type="ordered">
+					<p:column headerText="#{msgsCore['manageResources.form.type']}"> <h:outputText value="#{res.type}" /> </p:column>
+					<p:column headerText="#{msgsCore['manageResources.form.description']}"> <h:outputText value="#{res.description}" /> </p:column>
+					<p:column headerText="#{msgs['management.data.remove']}" rendered="#{not manageMeetingRoomsController.readOnly}" width="100"> 
+						<p:commandButton type="button" icon="ui-icon-trash" actionListener="#{manageMeetingRoomsController.removeResource}">
+							 <p:confirm header="Remove Resource" message="Are you sure?" icon="ui-icon-alert" />
+						</p:commandButton>
+						 
+						
+					</p:column>
+						
+				</p:dataTable>
+				<p:commandButton type="button" icon="ui-icon-plus" onclick="PF('dlg-manageResourcesAdd').show();"/>
+				
+			</ui:decorate>
+			
+			
+			<h:panelGroup rendered="#{! manageMeetingRoomsController.readOnly}">
+				<ui:decorate template="/resources/#{coreInfo.decorator}/formbuttonpanel-02.xhtml">
+					<p:commandButton id="cancelButton" action="#{manageMeetingRoomsController.list}" value="#{msgs['jbutler.crud.button.cancel']}" immediate="true" icon="fa fa-fw fa-close" />
+					<p:commandButton id="saveButton" action="#{manageMeetingRoomsController.save}" value="#{msgs['jbutler.crud.button.save']}" update=":form :globalMessages" icon="fa fa-fw fa-save" />
+					<p:defaultCommand target="saveButton" />
+					<p:hotkey bind="#{msgs['jbutler.crud.hotkey.backToList']}" action="#{manageMeetingRoomsController.list}" immediate="true" />
+				</ui:decorate>
+			</h:panelGroup>
+			<h:panelGroup rendered="#{manageMeetingRoomsController.readOnly}">
+				<ui:decorate template="/resources/#{coreInfo.decorator}/formbuttonpanel-01.xhtml">
+					<p:commandButton id="backButton" action="#{manageMeetingRoomsController.list}" value="#{msgs['jbutler.crud.button.back']}" immediate="true" icon="fa fa-fw fa-arrow-circle-left" />
+					<p:hotkey bind="#{msgs['jbutler.crud.hotkey.backToList']}" action="#{manageMeetingRoomsController.list}" immediate="true" />
+				</ui:decorate>
+			</h:panelGroup>
+		</ui:decorate>
+
+		   
+		<p:confirmDialog global="true">
+			<p:commandButton value="#{msgs['jbutler.crud.button.yes']}" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			<p:commandButton value="#{msgs['jbutler.crud.button.no']}" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+		</p:confirmDialog>
+		
+		<p:dialog header="Modal Dialog" widgetVar="dlg-manageResourcesAdd" modal="true" height="100">
+			<h:outputText value="This is a Modal Dialog." />
+		</p:dialog>
+    </ui:define>
+    
+
+</ui:composition>
