@@ -1,2 +1,5 @@
 # 2017-MeetingScheduler
-Assignment for the 2017 edition of the "Web Development and the Semantic Web" course, by Laercio de Souza and Pedro Pignaton Negri
+This is a preliminary system to practice Web Development in Java skills. The system intends to be a plataform to schedule meetings.
+
+# Requisites
+MScheduler was built using [Eclipse Neon 3](http://www.eclipse.org/neon/) IDE and runs over [Wild Fly 10] (http://wildfly.org/).
