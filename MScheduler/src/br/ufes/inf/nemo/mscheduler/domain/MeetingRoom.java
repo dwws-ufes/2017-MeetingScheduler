@@ -3,6 +3,7 @@ package br.ufes.inf.nemo.mscheduler.domain;
 import java.util.Set;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -28,7 +29,7 @@ public class MeetingRoom extends PersistentObjectSupport implements Comparable<M
 	private Set<Meeting> meetings;
 	
 	
-	@OneToMany(mappedBy="belongs", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="belongs", fetch=FetchType.EAGER, cascade = CascadeType.ALL)	
 	private Set<Resource> resource;
 
 	@ManyToOne

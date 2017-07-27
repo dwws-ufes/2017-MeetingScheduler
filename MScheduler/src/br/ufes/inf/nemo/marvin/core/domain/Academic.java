@@ -65,8 +65,8 @@ public class Academic extends Person {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastLoginDate;
 	
-	@ManyToMany(mappedBy="participants")
-	private Set<Meeting> appointments;
+	@ManyToMany(mappedBy="participants", cascade = CascadeType.ALL)
+	private Set<Meeting> meetings;
 
 	/** Getter for shortName. */
 	public String getShortName() {
@@ -146,12 +146,12 @@ public class Academic extends Person {
 		this.invited = invited;
 	}
 
-	public Set<Meeting> getAppointments() {
-		return appointments;
+	public Set<Meeting> getMeetings() {
+		return meetings;
 	}
 
-	public void setAppointments(Set<Meeting> appointments) {
-		this.appointments = appointments;
+	public void setMeetings(Set<Meeting> meetings) {
+		this.meetings = meetings;
 	}
 
 

@@ -59,8 +59,14 @@
 				<p:column headerText="#{msgsCore['manageMeetings.form.name']}">
 					<h:outputText value="#{entity.name}" />
 				</p:column>
-
-
+				<p:column headerText="#{msgsCore['manageMeetings.form.theme']}">
+					<h:outputText value="#{entity.theme}" />
+				</p:column>
+				<p:column headerText="#{msgsCore['manageMeetings.form.initialDate']}">
+					<h:outputText value="#{entity.initialDate}" >
+						<f:convertDateTime pattern="dd.MM.yyyy HH:mm" />
+					</h:outputText>
+				</p:column>
 				<p:ajax event="rowSelect" update=":listingForm:buttonsGroup" />
 				<p:ajax event="rowUnselect" update=":listingForm:buttonsGroup" />
 			</p:dataTable>

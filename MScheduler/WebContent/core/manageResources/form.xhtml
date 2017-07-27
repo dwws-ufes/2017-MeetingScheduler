@@ -47,6 +47,7 @@
 				<ui:param name="fieldName" value="belongs" />
 				<ui:param name="label" value="#{msgsCore['manageResources.form.belongs']}" />
 				<p:selectOneMenu id="belongs" value="#{manageResourcesController.selectedEntity.belongs}" converter="meetingRoomConverter" disabled="#{manageResourcesController.readOnly}">
+					<f:selectItem itemLabel="Select" noSelectionOption="true" itemDisabled="true"/>
 					<f:selectItems value="#{manageMeetingRoomsController.meetingRooms}" var="room" itemLabel="#{room.name}" itemValue="#{room}"/>
 				</p:selectOneMenu>
 			</ui:decorate>

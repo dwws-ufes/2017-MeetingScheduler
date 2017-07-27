@@ -35,14 +35,60 @@
 				</p:inputText>
 			</ui:decorate>
 			<ui:decorate template="/resources/#{coreInfo.decorator}/formfield.xhtml">
+				<ui:param name="fieldName" value="theme" />
+				<ui:param name="label" value="#{msgsCore['manageMeetings.form.Theme']}" />
+				<p:inputText id="theme" value="#{manageMeetingsController.selectedEntity.theme}" required="true" pt:placeholder="#{msgsCore['manageMeetings.form.theme.placeholder']}" disabled="#{manageMeetingsController.readOnly}">
+					<p:ajax event="blur" update="themeField" />
+				</p:inputText>
+			</ui:decorate>
+			<ui:decorate template="/resources/#{coreInfo.decorator}/formfield.xhtml">
 				<ui:param name="fieldName" value="requester" />
 				<ui:param name="label" value="#{msgsCore['manageMeetings.form.Requester']}" />
-				<p:inputText id="requester" value="#{manageMeetingsController.currentUser}" required="true" pt:placeholder="#{msgsCore['manageMeetings.form.name.placeholder']}" disabled="#{manageMeetingsController.readOnly}">
+				<p:inputText id="requester" value="#{manageMeetingsController.currentUser}" required="true" pt:placeholder="#{msgsCore['manageMeetings.form.name.placeholder']}" disabled="true">
 					<p:ajax event="blur" update="requesterField" />
 				</p:inputText>
 			</ui:decorate>
+			<ui:decorate template="/resources/#{coreInfo.decorator}/formfield.xhtml">
+				<ui:param name="fieldName" value="initialDate" />
+				<ui:param name="label" value="#{msgsCore['manageMeetings.form.initialDate']}" />
+				<p:calendar id="initialDate" value="#{manageMeetingsController.selectedEntity.initialDate}" pattern="dd-MM-yyyy HH:mm" mask="true" required="true" disabled="#{manageMeetingsController.readOnly}"/>
+			</ui:decorate>
+			<ui:decorate template="/resources/#{coreInfo.decorator}/formfield.xhtml">
+				<ui:param name="fieldName" value="endDate" />
+				<ui:param name="label" value="#{msgsCore['manageMeetings.form.endDate']}" />
+				<p:calendar id="endDate" value="#{manageMeetingsController.selectedEntity.endDate}" pattern="dd-MM-yyyy HH:mm" mask="true" required="true" disabled="#{manageMeetingsController.readOnly}"/>
+			</ui:decorate>
+			<ui:decorate
+				template="/resources/#{coreInfo.decorator}/formfield.xhtml">
+				<ui:param name="fieldName" value="room" />
+				<ui:param name="label"
+					value="#{msgsCore['manageMeetings.form.Room']}" />
+				<p:selectOneMenu id="room"
+					value="#{manageMeetingsController.selectedEntity.room}"
+					converter="meetingRoomConverter"
+					disabled="#{manageMeetingsController.readOnly}">
+					<f:selectItem itemLabel="Select" noSelectionOption="true" itemDisabled="true"/>
+					<f:selectItems
+						value="#{manageMeetingRoomsController.meetingRooms}" var="local"
+						itemLabel="#{local.name} : #{local.capacity} (#{local.localization.description}, #{local.localization.city})" itemValue="#{local}" />
+				</p:selectOneMenu>
+			</ui:decorate>
 			
-
+			<h:outputText value="#{msgsCore['manageMeetings.form.Participants']}:" pt:class="col-sm-2 control-label"/>	
+				<p:dataTable
+					value="#{manageMeetingsController.selectedEntity.participants}"
+					var="res" type="ordered" 
+					id="participants-datatable"
+					>
+					<p:column headerText="#{msgsCore['manageResources.form.type']}">
+						<h:outputText value="#{res.name}" />
+					</p:column>
+				</p:dataTable>
+				<p:commandButton type="button" icon="ui-icon-plus"
+					onclick="PF('dlg-manageParticipantsAdd').show();"
+					rendered="#{not manageMeetingsController.readOnly}" />
+			
+			
 			<h:panelGroup rendered="#{! manageMeetingsController.readOnly}">
 				<ui:decorate template="/resources/#{coreInfo.decorator}/formbuttonpanel-02.xhtml">
 					<p:commandButton id="cancelButton" action="#{manageMeetingsController.list}" value="#{msgs['jbutler.crud.button.cancel']}" immediate="true" icon="fa fa-fw fa-close" />
@@ -58,5 +104,45 @@
 				</ui:decorate>
 			</h:panelGroup>
 		</ui:decorate>
+		
+		<p:dialog header="Modal Dialog" widgetVar="dlg-manageParticipantsAdd"
+			modal="true" height="200">
+			<ui:decorate template="/resources/#{coreInfo.decorator}/form.xhtml">
+				<ui:param name="formName" value="formSearchAcademic" />
+
+				<h:panelGrid id="panelAcademicsFinded" columns="1">
+					<p:column>
+						<p:inputText
+							value="#{manageAcademicsController.stringBuscaAcademics}" />
+						<p:commandButton icon="ui-icon-search" title="Icon Only"
+							actionListener="#{manageAcademicsController.retrieveAcademicsListByName}"
+							update=":formSearchAcademic"
+							 />
+					</p:column>
+					<p:column>
+						<p:dataTable id="listaAcademicsBuscados"
+							value="#{manageAcademicsController.academicsList}"
+							var="searchAcademic" type="ordered"
+							selectionMode="multiple"
+							selection="#{manageMeetingsController.selectedParticipants}" rowKey="#{searchAcademic.id}"							
+							>
+							<p:column headerText="#{msgsCore['manageResources.form.type']}">
+								<h:outputText value="#{searchAcademic.name}" />
+							</p:column>
+	
+							<f:facet name="footer">
+								<p:commandButton process="listaAcademicsBuscados"
+									 icon="ui-icon-plus"
+									value="Add" oncomplete="PF('dlg-manageParticipantsAdd').hide();"
+									action="#{manageMeetingsController.saveSelectedParticipants()}"
+									update=":form:participants-datatable"
+									 />
+							</f:facet>
+						</p:dataTable>
+					</p:column>
+				</h:panelGrid>
+			</ui:decorate>
+		</p:dialog>
+		
     </ui:define>
 </ui:composition>

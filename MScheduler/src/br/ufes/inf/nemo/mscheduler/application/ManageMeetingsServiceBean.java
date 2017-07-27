@@ -12,6 +12,7 @@ import br.ufes.inf.nemo.jbutler.ejb.persistence.BaseDAO;
 import br.ufes.inf.nemo.marvin.core.controller.SessionController;
 import br.ufes.inf.nemo.marvin.core.domain.Academic;
 import br.ufes.inf.nemo.mscheduler.domain.Meeting;
+import br.ufes.inf.nemo.mscheduler.domain.MeetingRoom;
 import br.ufes.inf.nemo.mscheduler.persistence.MeetingDAO;
 
 @Stateless
@@ -21,6 +22,7 @@ public class ManageMeetingsServiceBean extends CrudServiceBean<Meeting> implemen
 	
 	@EJB
 	private MeetingDAO meetingDAO;
+
 	
 	@Override
 	public BaseDAO<Meeting> getDAO() {
@@ -28,4 +30,5 @@ public class ManageMeetingsServiceBean extends CrudServiceBean<Meeting> implemen
 		return meetingDAO;
 	}
 	
+
 }

@@ -1,20 +1,43 @@
 package br.ufes.inf.nemo.mscheduler.domain;
 
 
+import java.util.Date;
 import java.util.Set;
 
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
 import br.ufes.inf.nemo.marvin.core.domain.Academic;
 
 @Entity
-public class Meeting extends Appointment{
+public class Meeting extends PersistentObjectSupport implements Comparable<Meeting>{
 	private static final long serialVersionUID = 1L;
+	
+	/*Nome do Compromisso*/
+	@Basic
+	@NotNull
+	@Size(max = 100)
+	protected String name;
+	
+	/*Data e Hora do início do compromisso*/
+	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
+	protected Date initialDate;
+	
+	/*Data e Hora do final do compromisso*/
+	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
+	protected Date endDate;
 	
 	@Basic
 	@NotNull
@@ -33,12 +56,13 @@ public class Meeting extends Appointment{
 	@ManyToOne(optional = false)
 	private Academic requester;
 	
-	@OneToMany(mappedBy="meeting")
-	private Set<Invitation> invitations;
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
+	private Set<Academic> participants;
 
 	@ManyToOne
 	private MeetingRoom room;
 
+	
 	public String getTheme() {
 		return theme;
 	}
@@ -71,20 +95,50 @@ public class Meeting extends Appointment{
 		this.requester = requester;
 	}
 
-	public Set<Invitation> getInvitations() {
-		return invitations;
-	}
-
-	public void setInvitations(Set<Invitation> invitations) {
-		this.invitations = invitations;
-	}
-
 	public MeetingRoom getRoom() {
 		return room;
 	}
 
 	public void setRoom(MeetingRoom room) {
 		this.room = room;
+	}
+
+	public Set<Academic> getParticipants() {
+		return participants;
+	}
+
+	public void setParticipants(Set<Academic> participants) {
+		this.participants = participants;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Date getInitialDate() {
+		return initialDate;
+	}
+
+	public void setInitialDate(Date initialDate) {
+		this.initialDate = initialDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	@Override
+	public int compareTo(Meeting o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	

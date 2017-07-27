@@ -8,13 +8,17 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.faces.model.SelectItem;
 
 import br.ufes.inf.nemo.jbutler.ejb.application.CrudService;
 import br.ufes.inf.nemo.jbutler.ejb.controller.CrudController;
+import br.ufes.inf.nemo.jbutler.ejb.persistence.exceptions.MultiplePersistentObjectsFoundException;
+import br.ufes.inf.nemo.jbutler.ejb.persistence.exceptions.PersistentObjectNotFoundException;
 import br.ufes.inf.nemo.mscheduler.application.ManageLocalizationsService;
 import br.ufes.inf.nemo.mscheduler.application.ManageMeetingRoomsService;
+import br.ufes.inf.nemo.mscheduler.application.ManageResourcesService;
 import br.ufes.inf.nemo.mscheduler.domain.Localization;
 import br.ufes.inf.nemo.mscheduler.domain.MeetingRoom;
 import br.ufes.inf.nemo.mscheduler.domain.Resource;
@@ -26,13 +30,55 @@ public class ManageMeetingRoomsController extends CrudController<MeetingRoom> {
 	@EJB
 	private ManageMeetingRoomsService manageMeetingRoomsService;
 	
+	@Inject
+	private ManageResourcesService manageResourcesService;
+	
 	private List<MeetingRoom> meetingRooms;
+	
+	private List<Resource> resourcesList;
+	
+	private List<Resource> selectedResources;
+	
+	private String stringBuscaResources;
+	
 	
 	@PostConstruct
     public void init() {
-		 meetingRooms = manageMeetingRoomsService.getDAO().retrieveAll();
+		meetingRooms = manageMeetingRoomsService.getDAO().retrieveAll();
 	
 	 }
+	
+	
+	public void saveSelectedResources(){
+		for(Resource resource : selectedResources){
+			resource.setBelongs(selectedEntity);
+			manageResourcesService.update(resource);
+		}
+	}
+
+	
+	public void removeResource(Resource resource){
+		System.out.println("deletando atributo belongs do resource");
+		
+		selectedEntity.getResource().clear();
+		manageMeetingRoomsService.update(selectedEntity);
+		
+	}
+	
+	public void retrieveResourceListByNameDescription() throws PersistentObjectNotFoundException, MultiplePersistentObjectsFoundException{
+		if(stringBuscaResources != null){
+			System.out.println(stringBuscaResources);
+		}else{
+			System.out.println("stringBuscaResources é null");
+		}
+		if (!stringBuscaResources.isEmpty()) {
+			setResourcesList(manageResourcesService.retrieveByDescriptionName(stringBuscaResources));
+		}
+	}
+	
+	
+	
+	
 	
 	
 	
@@ -53,6 +99,34 @@ public class ManageMeetingRoomsController extends CrudController<MeetingRoom> {
 
 	public void setMeetingRooms(List<MeetingRoom> meetingRooms) {
 		this.meetingRooms = meetingRooms;
+	}
+
+
+
+	public List<Resource> getResourcesList() {
+		return resourcesList;
+	}
+
+
+
+	public void setResourcesList(List<Resource> resourcesList) {
+		this.resourcesList = resourcesList;
+	}
+	
+	public List<Resource> getSelectedResources() {
+		return selectedResources;
+	}
+
+	public void setSelectedResources(List<Resource> selectedResources) {
+		this.selectedResources = selectedResources;
+	}
+
+	public String getStringBuscaResources() {
+		return stringBuscaResources;
+	}
+
+	public void setStringBuscaResources(String stringBuscaResources) {
+		this.stringBuscaResources = stringBuscaResources;
 	}
 
 	

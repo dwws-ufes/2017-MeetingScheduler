@@ -10,7 +10,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import br.ufes.inf.nemo.jbutler.ejb.persistence.PersistentObjectSupport;
-import br.ufes.inf.nemo.mscheduler.domain.Appointment;
 
 /**
  * Domain class that represents people and their most basic attributes, such as name, birthdate and gender.
