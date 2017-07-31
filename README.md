@@ -5,7 +5,7 @@ This is a preliminary system to practice Web Development in Java skills, built u
 MScheduler was built using [Eclipse Neon 3](http://www.eclipse.org/neon/) IDE and runs over [Wild Fly 10](http://wildfly.org/). Also, it is configured to connect to a [MySQL Database](https://www.mysql.com/).
 
 # Configuration
-The database connection is configured at WildFly configuration file `standalone.xml`. It can be edited to specify other connections, if necessary.
+The database connection is configured at WildFly configuration file `standalone.xml`. It can be edited to specify other datasource, if necessary.
 
 ```xml
 <datasource jta="true" jndi-name="java:jboss/datasources/MScheduler" pool-name="MSchedulerPool" enabled="true" use-java-context="true">
