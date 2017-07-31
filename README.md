@@ -19,6 +19,8 @@ The database connection is configured at WildFly configuration file `standalone.
 ```
 This project uses [Maven](https://maven.apache.org/) as a library dependence manager. So, the libraries used in this project are described in `pom.xml` file.
 
+# Testing
+The application is available at address [http://localhost:8080/MScheduler](http://localhost:8080/MScheduler).
 
 # Team
 Pedro
