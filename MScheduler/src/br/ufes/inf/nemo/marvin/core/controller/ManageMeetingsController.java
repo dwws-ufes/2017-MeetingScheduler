@@ -15,8 +15,10 @@ import br.ufes.inf.nemo.jbutler.ejb.controller.CrudController;
 import br.ufes.inf.nemo.marvin.core.application.SessionInformation;
 import br.ufes.inf.nemo.marvin.core.controller.SessionController;
 import br.ufes.inf.nemo.marvin.core.domain.Academic;
+import br.ufes.inf.nemo.mscheduler.application.ManageMeetingRoomsService;
 import br.ufes.inf.nemo.mscheduler.application.ManageMeetingsService;
 import br.ufes.inf.nemo.mscheduler.domain.Meeting;
+import br.ufes.inf.nemo.mscheduler.domain.MeetingRoom;
 import br.ufes.inf.nemo.mscheduler.domain.Resource;
 
 @Named
@@ -26,10 +28,14 @@ public class ManageMeetingsController extends CrudController<Meeting> {
 	@EJB
 	private ManageMeetingsService manageMeetingsService;
 	
+	@EJB
+	private ManageMeetingRoomsService manageMeetingRoomsService;
+	
 	@Inject
 	SessionController sessionController;
 	
 	private List<Academic> selectedParticipants;
+	private List<MeetingRoom> meetingRooms;
 	
 	@Override
 	protected CrudService<Meeting> getCrudService(){
@@ -80,5 +86,27 @@ public class ManageMeetingsController extends CrudController<Meeting> {
 	public void setSelectedParticipants(List<Academic> selectedParticipants) {
 		this.selectedParticipants = selectedParticipants;
 	}
+
+
+	public ManageMeetingRoomsService getManageMeetingRoomsService() {
+		return manageMeetingRoomsService;
+	}
+
+
+	public void setManageMeetingRoomsService(ManageMeetingRoomsService manageMeetingRoomsService) {
+		this.manageMeetingRoomsService = manageMeetingRoomsService;
+	}
+
+
+	public List<MeetingRoom> getMeetingRooms() {
+		return manageMeetingRoomsService.getDAO().retrieveAll();
+	}
+
+
+	public void setMeetingRooms(List<MeetingRoom> meetingRooms) {
+		this.meetingRooms = meetingRooms;
+	}
+	
+	
 	
 }

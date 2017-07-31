@@ -76,7 +76,7 @@
 					disabled="#{manageMeetingRoomsController.readOnly}">
 					<f:selectItem itemLabel="Select" noSelectionOption="true" itemDisabled="true"/>
 					<f:selectItems
-						value="#{manageLocalizationsController.localizations}" var="local"
+						value="#{manageMeetingRoomsController.localizations}" var="local"
 						itemLabel="#{local.description}" itemValue="#{local}" />
 				</p:selectOneMenu>
 			</ui:decorate>
@@ -86,7 +86,7 @@
 
 				<p:dataTable
 					value="#{manageMeetingRoomsController.selectedEntity.resource}"
-					var="res" type="ordered">
+					var="res" type="ordered" id="resources-datatable">
 					<p:column headerText="#{msgsCore['manageResources.form.type']}">
 						<h:outputText value="#{res.type}" />
 					</p:column>
@@ -180,7 +180,7 @@
 							</p:column>
 							<f:facet name="footer">
 								<p:commandButton process="listaResourcesBuscados"
-									update=":formSearchResource" icon="ui-icon-plus"
+									update=":form:resources-datatable" icon="ui-icon-plus"
 									value="Add" oncomplete="PF('dlg-manageResourcesAdd').hidden();"
 									action="#{manageMeetingRoomsController.saveSelectedResources()}" />
 							</f:facet>

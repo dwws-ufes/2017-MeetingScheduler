@@ -33,11 +33,16 @@ public class ManageMeetingRoomsController extends CrudController<MeetingRoom> {
 	@Inject
 	private ManageResourcesService manageResourcesService;
 	
+	@EJB
+	private ManageLocalizationsService manageLocalizationsService;
+	
 	private List<MeetingRoom> meetingRooms;
 	
 	private List<Resource> resourcesList;
 	
 	private List<Resource> selectedResources;
+	
+	private List<Localization> localizations;
 	
 	private String stringBuscaResources;
 	
@@ -62,6 +67,7 @@ public class ManageMeetingRoomsController extends CrudController<MeetingRoom> {
 		
 		selectedEntity.getResource().clear();
 		manageMeetingRoomsService.update(selectedEntity);
+		
 		
 	}
 	
@@ -128,6 +134,47 @@ public class ManageMeetingRoomsController extends CrudController<MeetingRoom> {
 	public void setStringBuscaResources(String stringBuscaResources) {
 		this.stringBuscaResources = stringBuscaResources;
 	}
+
+
+	public ManageMeetingRoomsService getManageMeetingRoomsService() {
+		return manageMeetingRoomsService;
+	}
+
+
+	public void setManageMeetingRoomsService(ManageMeetingRoomsService manageMeetingRoomsService) {
+		this.manageMeetingRoomsService = manageMeetingRoomsService;
+	}
+
+
+	public ManageResourcesService getManageResourcesService() {
+		return manageResourcesService;
+	}
+
+
+	public void setManageResourcesService(ManageResourcesService manageResourcesService) {
+		this.manageResourcesService = manageResourcesService;
+	}
+
+
+	public ManageLocalizationsService getManageLocalizationsService() {
+		return manageLocalizationsService;
+	}
+
+
+	public void setManageLocalizationsService(ManageLocalizationsService manageLocalizationsService) {
+		this.manageLocalizationsService = manageLocalizationsService;
+	}
+
+
+	public List<Localization> getLocalizations() {
+		return manageLocalizationsService.getDAO().retrieveAll();
+	}
+
+
+	public void setLocalizations(List<Localization> localizations) {
+		this.localizations = localizations;
+	}
+
 
 	
 }

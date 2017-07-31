@@ -35,7 +35,7 @@ public class ManageLocalizationsController extends CrudController<Localization> 
 	
 	@PostConstruct
     public void init() {
-		 localizations = manageLocalizationsService.getDAO().retrieveAll();
+		
 	
 	 }
 	
@@ -52,7 +52,7 @@ public class ManageLocalizationsController extends CrudController<Localization> 
 		
 	}
 
-	public List<Localization> getLocalizations() {
+	public List<Localization> getLocalizations() {		
 		return localizations;
 	}
 

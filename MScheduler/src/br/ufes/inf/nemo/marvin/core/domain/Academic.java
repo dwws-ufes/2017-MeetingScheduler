@@ -65,7 +65,7 @@ public class Academic extends Person {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date lastLoginDate;
 	
-	@ManyToMany(mappedBy="participants", cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy="participants", cascade = CascadeType.MERGE)
 	private Set<Meeting> meetings;
 
 	/** Getter for shortName. */

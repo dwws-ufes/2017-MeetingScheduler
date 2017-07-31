@@ -69,7 +69,7 @@
 					disabled="#{manageMeetingsController.readOnly}">
 					<f:selectItem itemLabel="Select" noSelectionOption="true" itemDisabled="true"/>
 					<f:selectItems
-						value="#{manageMeetingRoomsController.meetingRooms}" var="local"
+						value="#{manageMeetingsController.meetingRooms}" var="local"
 						itemLabel="#{local.name} : #{local.capacity} (#{local.localization.description}, #{local.localization.city})" itemValue="#{local}" />
 				</p:selectOneMenu>
 			</ui:decorate>
@@ -80,8 +80,11 @@
 					var="res" type="ordered" 
 					id="participants-datatable"
 					>
-					<p:column headerText="#{msgsCore['manageResources.form.type']}">
+					<p:column headerText="#{msgsCore['manageAcademics.form.name']}">
 						<h:outputText value="#{res.name}" />
+					</p:column>
+					<p:column headerText="#{msgsCore['manageAcademics.form.email']}">
+						<h:outputText value="#{res.email}" />
 					</p:column>
 				</p:dataTable>
 				<p:commandButton type="button" icon="ui-icon-plus"
@@ -105,7 +108,7 @@
 			</h:panelGroup>
 		</ui:decorate>
 		
-		<p:dialog header="Modal Dialog" widgetVar="dlg-manageParticipantsAdd"
+		<p:dialog header="Add Participants" widgetVar="dlg-manageParticipantsAdd"
 			modal="true" height="200">
 			<ui:decorate template="/resources/#{coreInfo.decorator}/form.xhtml">
 				<ui:param name="formName" value="formSearchAcademic" />
@@ -126,8 +129,11 @@
 							selectionMode="multiple"
 							selection="#{manageMeetingsController.selectedParticipants}" rowKey="#{searchAcademic.id}"							
 							>
-							<p:column headerText="#{msgsCore['manageResources.form.type']}">
+							<p:column headerText="#{msgsCore['manageAcademics.form.name']}">
 								<h:outputText value="#{searchAcademic.name}" />
+							</p:column>
+							<p:column headerText="#{msgsCore['manageAcademics.form.email']}">
+								<h:outputText value="#{searchAcademic.email}" />
 							</p:column>
 	
 							<f:facet name="footer">

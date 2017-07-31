@@ -56,7 +56,7 @@ public class Meeting extends PersistentObjectSupport implements Comparable<Meeti
 	@ManyToOne(optional = false)
 	private Academic requester;
 	
-	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)	
+	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)	
 	private Set<Academic> participants;
 
 	@ManyToOne
