@@ -27,7 +27,7 @@ public class Person extends PersistentObjectSupport implements Comparable<Person
 	/** The person's name. */
 	@Basic
 	@NotNull
-	@Size(max = 100)
+	@Size(max = 300)
 	protected String name;
 
 	/** The person's birth date. */

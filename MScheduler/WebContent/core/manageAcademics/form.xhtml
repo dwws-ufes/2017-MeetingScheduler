@@ -33,6 +33,7 @@
 				<p:inputText id="name" value="#{manageAcademicsController.selectedEntity.name}" required="true" pt:placeholder="#{msgsCore['manageAcademics.form.name.placeholder']}" disabled="#{manageAcademicsController.readOnly}">
 					<p:ajax event="blur" update="nameField" />
 				</p:inputText>
+				<p:button value="#{manageAcademicsController.selectedEntity.wikidataId}" onclick="window.open('https://www.wikidata.org/wiki/#{manageAcademicsController.selectedEntity.wikidataId}');return false;" rendered="#{not empty manageAcademicsController.selectedEntity.wikidataId}"   />
 			</ui:decorate>
 			<ui:decorate template="/resources/#{coreInfo.decorator}/formfield.xhtml">
 				<ui:param name="fieldName" value="email" />
@@ -57,6 +58,13 @@
 					<f:selectItem itemLabel="#{msgs['jbutler.data.gender.male.name']}" itemValue="#{msgs['jbutler.data.gender.male.symbol']}"/>
 					<f:selectItem itemLabel="#{msgs['jbutler.data.gender.female.name']}" itemValue="#{msgs['jbutler.data.gender.female.symbol']}"/>
 				</p:selectOneRadio>
+			</ui:decorate>
+			<ui:decorate template="/resources/#{coreInfo.decorator}/formfield.xhtml">
+				<ui:param name="fieldName" value="occupations" />
+				<ui:param name="label" value="Occupations" />
+				<p:inputText id="occupations" value="#{manageAcademicsController.occupations}" disabled="true">
+					<p:ajax event="blur" update="occupationsField" />
+				</p:inputText>
 			</ui:decorate>
 
 			<h:panelGroup rendered="#{! manageAcademicsController.readOnly}">

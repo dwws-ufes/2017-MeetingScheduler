@@ -10,9 +10,11 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="Dali", date="2017-07-27T10:31:48.423-0300")
+@Generated(value="Dali", date="2017-08-01T20:18:57.991-0300")
 @StaticMetamodel(Academic.class)
 public class Academic_ extends Person_ {
+	public static volatile SingularAttribute<Academic, String> wikidataId;
+	public static volatile SingularAttribute<Academic, String> wikidataURI;
 	public static volatile SingularAttribute<Academic, String> shortName;
 	public static volatile SingularAttribute<Academic, String> email;
 	public static volatile SingularAttribute<Academic, String> password;

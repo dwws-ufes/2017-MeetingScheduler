@@ -74,11 +74,12 @@
 
 			<!-- Buttons shown below the listing. -->
 			<h:panelGroup id="buttonsGroup">
-				<ui:decorate template="/resources/#{coreInfo.decorator}/formbuttonpanel-04.xhtml">
+				<ui:decorate template="/resources/#{coreInfo.decorator}/formbuttonpanel-05.xhtml">
 					<p:commandButton action="#{manageAcademicsController.create}" value="#{msgs['jbutler.crud.button.create']}" icon="fa fa-fw fa-user-plus" />
 					<p:commandButton action="#{manageAcademicsController.retrieve}" value="#{msgs['jbutler.crud.button.retrieve']}" icon="fa fa-fw fa-file-text" disabled="#{manageAcademicsController.selectedEntity == null}" />
 					<p:commandButton action="#{manageAcademicsController.update}" value="#{msgs['jbutler.crud.button.update']}" icon="fa fa-fw fa-refresh" disabled="#{manageAcademicsController.selectedEntity == null}" />
 					<p:commandButton action="#{manageAcademicsController.trash}" value="#{msgs['jbutler.crud.button.delete']}" icon="fa fa-fw fa-trash-o" disabled="#{manageAcademicsController.selectedEntity == null}" process="@this" update=":listingForm:trashGroup" />
+					<p:commandButton action="#{manageAcademicsController.importAcademics}" value="Import Academics" icon="fa fa-star-o" update=":listingForm" />
 				</ui:decorate>
 				<p:hotkey bind="#{msgs['jbutler.crud.hotkey.create']}" action="#{manageAcademicsController.create}" />
 				<p:hotkey bind="#{msgs['jbutler.crud.hotkey.retrieve']}" action="#{manageAcademicsController.retrieve}" rendered="#{manageAcademicsController.selectedEntity != null}" />

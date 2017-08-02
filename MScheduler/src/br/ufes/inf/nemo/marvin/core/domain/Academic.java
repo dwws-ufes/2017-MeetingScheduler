@@ -28,11 +28,18 @@ import br.ufes.inf.nemo.mscheduler.domain.Meeting;
 public class Academic extends Person {
 	/** Serialization id. */
 	private static final long serialVersionUID = 1L;
-
+	
+	
+	@Basic
+	private String wikidataId;
+	
+	@Basic
+	private String wikidataURI;	
+	
 	/** Short name to use when there isn't much space. */
 	@Basic
 	@NotNull
-	@Size(max = 15)
+	@Size(max = 150)
 	private String shortName;
 
 	/** Electronic address, which also serves as username for identification. */
@@ -152,6 +159,22 @@ public class Academic extends Person {
 
 	public void setMeetings(Set<Meeting> meetings) {
 		this.meetings = meetings;
+	}
+
+	public String getWikidataId() {
+		return wikidataId;
+	}
+
+	public void setWikidataId(String wikidataId) {
+		this.wikidataId = wikidataId;
+	}
+
+	public String getWikidataURI() {
+		return wikidataURI;
+	}
+
+	public void setWikidataURI(String wikidataURI) {
+		this.wikidataURI = wikidataURI;
 	}
 
 
